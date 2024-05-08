@@ -1,3 +1,10 @@
 streamlit 
+pandas
 PIL
+numpy 
+matplotlib.pyplot
 plotly.figure_factory
+sklearn.metrics
+sklearn.ensemble 
+sklearn.model_selection
+seaborn 
