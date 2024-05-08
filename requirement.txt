@@ -2,7 +2,7 @@ streamlit
 pandas
 PIL
 numpy 
-matplotlib.pyplot
+matplotlib
 plotly.figure_factory
 sklearn.metrics
 sklearn.ensemble 
