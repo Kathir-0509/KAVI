@@ -1,9 +1,3 @@
-#pip install streamlit
-#pip install pandas
-#pip install sklearn
-
-
-# IMPORT STATEMENTS
 import streamlit as st
 import pandas as pd
 from PIL import Image
@@ -14,9 +8,6 @@ from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 import seaborn as sns
-
-
-
 df = pd.read_csv(('E:\HGS TEAM\phases\diabetes.csv'))
 print(df.isnull().values.any())
 print((df.Pregnancies == 0).sum(),(df.Glucose==0).sum(),(df.BloodPressure==0).sum(),(df.SkinThickness==0).sum(),(df.Insulin==0).sum(),(df.BMI==0).sum(),(df.DiabetesPedigreeFunction==0).sum(),(df.Age==0).sum())
@@ -29,22 +20,13 @@ drop_BMI = df.index[df.BMI==0].tolist()
 c=drop_Glu+drop_BP+drop_Skin+drop_Ins+drop_BMI
 data=df.drop(df.index[c])
 print(data)
-
-
-# HEADINGS
 st.title('Diabetes status check')
 st.sidebar.header('Patient Data')
 st.subheader('Training Data Stats')
 st.write(data.describe())
-
-
-# X AND Y DATA
 x = data.drop(['Outcome'], axis = 1)
 y = data.iloc[:, -1]
 x_train, x_test, y_train, y_test = train_test_split(x,y, test_size = 0.2, random_state = 0)
-
-
-# FUNCTION
 def user_report():
   pregnancies = st.sidebar.slider('Pregnancies', 0,17, 3 )
   glucose = st.sidebar.slider('Glucose', 0,200, 120 )
@@ -67,37 +49,20 @@ def user_report():
   }
   report_data = pd.DataFrame(user_report_data, index=[0])
   return report_data
-
-
-
-
-# PATIENT DATA
 user_data = user_report()
 st.subheader('Patient Data')
 st.write(user_data)
-
-
-
-
 # MODEL
 rf  = RandomForestClassifier()
 rf.fit(x_train, y_train)
 user_result = rf.predict(user_data)
-
-
-
 # VISUALISATIONS
 st.title('Visualised Patient Report')
-
-
-
 # COLOR FUNCTION
 if user_result[0]==0:
   color = 'green'
 else:
   color = 'red'
-
-
 # Age vs Pregnancies
 st.header('Pregnancy count Graph (Others vs Yours)')
 fig_preg = plt.figure()
@@ -107,9 +72,6 @@ plt.xticks(np.arange(10,100,5))
 plt.yticks(np.arange(0,20,2))
 plt.title('0 - Healthy & 1 - Unhealthy')
 st.pyplot(fig_preg)
-
-
-
 # Age vs Glucose
 st.header('Glucose Value Graph (Others vs Yours)')
 fig_glucose = plt.figure()
@@ -119,9 +81,6 @@ plt.xticks(np.arange(10,100,5))
 plt.yticks(np.arange(0,220,10))
 plt.title('0 - Healthy & 1 - Unhealthy')
 st.pyplot(fig_glucose)
-
-
-
 # Age vs Bp
 st.header('Blood Pressure Value Graph (Others vs Yours)')
 fig_bp = plt.figure()
@@ -131,8 +90,6 @@ plt.xticks(np.arange(10,100,5))
 plt.yticks(np.arange(0,130,10))
 plt.title('0 - Healthy & 1 - Unhealthy')
 st.pyplot(fig_bp)
-
-
 # Age vs St
 st.header('Skin Thickness Value Graph (Others vs Yours)')
 fig_st = plt.figure()
@@ -142,8 +99,6 @@ plt.xticks(np.arange(10,100,5))
 plt.yticks(np.arange(0,110,10))
 plt.title('0 - Healthy & 1 - Unhealthy')
 st.pyplot(fig_st)
-
-
 # Age vs Insulin
 st.header('Insulin Value Graph (Others vs Yours)')
 fig_i = plt.figure()
@@ -153,8 +108,6 @@ plt.xticks(np.arange(10,100,5))
 plt.yticks(np.arange(0,900,50))
 plt.title('0 - Healthy & 1 - Unhealthy')
 st.pyplot(fig_i)
-
-
 # Age vs BMI
 st.header('BMI Value Graph (Others vs Yours)')
 fig_bmi = plt.figure()
@@ -164,8 +117,6 @@ plt.xticks(np.arange(10,100,5))
 plt.yticks(np.arange(0,70,5))
 plt.title('0 - Healthy & 1 - Unhealthy')
 st.pyplot(fig_bmi)
-
-
 # Age vs Dpf
 st.header('DPF Value Graph (Others vs Yours)')
 fig_dpf = plt.figure()
@@ -175,10 +126,7 @@ plt.xticks(np.arange(10,100,5))
 plt.yticks(np.arange(0,3,0.2))
 plt.title('0 - Healthy & 1 - Unhealthy')
 st.pyplot(fig_dpf)
-
-
-
-# OUTPUT
+ OUTPUT
 st.subheader('Your Report: ')
 output=''
 if user_result[0]==0:
